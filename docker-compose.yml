@@ -1,0 +1,27 @@
+version: '1.0'
+services:
+   mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: redhat
+      MYSQL_DATABASE: user_data
+      MYSQL_USER: my_user
+      MYSQL_PASSWORD: redhat
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d
+
+   python-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: python-app
+    environment:
+      FLASK_ENV: development
+      MYSQL_HOST: mysql
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql

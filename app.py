@@ -1,14 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for
 #from flask_mysqldb import MySQL
+import os
 import mysql.connector
 
 app = Flask(__name__)
 
 # MySQL database connection configuration
 
+db_host= os.getenv('MYSQL_HOST','localhost')
+
+
 def get_db_connection():
     conn = mysql.connector.connect(
-        host="172.17.0.3",      # Change this to your MySQL host (use "localhost" for local DB)
+        #host="172.20.0.2",      # Change this to your MySQL host (use "localhost" for local DB)
+        host=db_host,
         user="root",           # Replace with your MySQL username
         password="redhat",  # Replace with your MySQL password
         database="user_data"   # Replace with your database name
